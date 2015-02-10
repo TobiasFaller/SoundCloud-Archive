@@ -17,7 +17,7 @@ print "Active User - %s" %client.get('/me').username  #YUSS THIS WORKED
 print "+---------------------+"
 # get playlist
 #so basically since the API already knows who you are just put '/playlists' before the name of the playlist
-playlist = client.get('/playlists/deep')
+playlist = client.get('/playlists/')
 
 # list tracks in playlist
 for track in playlist.tracks:
