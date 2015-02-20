@@ -2,8 +2,7 @@
 #the whole point of this is to archive my entire soundcloud, and log when things change
 
 import requests
-import bs4
-
+from lxml import html
 
 from blessed import Terminal
 t = Terminal()
@@ -31,17 +30,17 @@ print '+-----------------------+'
 
 def scrape_playlists(url_base,url_plsts):
 	print 'starting to scrape playlists'
-	response = requests.get(url_plsts) #load target page with requests
-	soup = bs4.BeautifulSoup(response.text)
-	print [a.attrs.get()]
-	
-	
+	page = requests.get(url_plsts) #load target page with requests
+	tree = html.fromstring(page.text) #translate target page into text tree
+
+	#list of plsts names '<span class>Smooth R&B</span>'
+	#list of target urls (to scrape individually) '<a class="soundTitle__title sc-link-dark " href="/oztrance/sets/smooth-r-b">
+
+	playlists = tree.xpath('//span[@class="class"]/text()')
+	print 'Playlists:', playlists
 
 def main():
 	scrape_playlists(url_base,url_plsts)
 
 if __name__ == '__main__':
 	main()
-
-
-
