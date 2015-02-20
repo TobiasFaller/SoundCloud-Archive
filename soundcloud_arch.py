@@ -14,5 +14,13 @@ arch_path = 'path/to/archive/location' #path to location where archive will be s
 
 #sub url definitions
 url_base = url_null + user + '/' # '/' is important
-url_likes = url_base + 'likes'
-url_plsts = url_base + 'sets'
+url_likes = url_base + 'likes' #url for likes
+url_plsts = url_base + 'sets' #url for playlists
+
+#test output
+print '+-----------------------+'
+print ('Base (w/ user) -> %s') %url_base
+print ('Likes ----------> %s ') % url_likes
+print ('Playlists ------> %s') %url_plsts
+print ('Current User ---> %s') %(user)
+print '+-----------------------+'
