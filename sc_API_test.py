@@ -8,8 +8,8 @@ i = 1
 # create client object with app and user credentials
 client = soundcloud.Client(client_id='491887981f67eb79c3c7cefbeccfebf4',
                            client_secret='cc19c241769e2284da6a377452fce946',
-                           username='oztrance',
-                           password='soundoftheOZ13')
+                           username='oztran**',
+                           password='soundoftheOZ**')
 
 # print authenticated user's username
 print "+---------------------+"
