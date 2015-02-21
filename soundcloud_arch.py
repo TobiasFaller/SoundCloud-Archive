@@ -2,8 +2,6 @@
 #the whole point of this is to archive my entire soundcloud, and log when things change
 
 import requests
-import bs4
-
 
 from blessed import Terminal
 t = Terminal()
@@ -19,6 +17,10 @@ url_base = url_null + user + '/' # '/' is important
 url_likes = url_base + 'likes' #url for likes
 url_plsts = url_base + 'sets' #url for playlists
 
+#soundcloud api info (HTTP api not Python API)
+client_id = '9fbbd1e3baad458473e7cf3f9334f43c'
+client_secret = 'c98e6764e1adb8c4ccd2904dfdcacac6'
+
 #test output
 print '+-----------------------+'
 print ('Base (w/ user) -> %s') %url_base
@@ -29,16 +31,13 @@ print '+-----------------------+'
 
 #other functions
 
-def scrape_playlists(url_base,url_plsts):
-	print 'starting to scrape playlists'
-	response = requests.get(url_plsts) #load target page with requests
-	soup = bs4.BeautifulSoup(response.text)
-	print [a.attrs.get()]
-	
-	
+def enumerate_plsts():
+#use soundcloud HTTP api to find numer & names of playlists
+
+ 
 
 def main():
-	scrape_playlists(url_base,url_plsts)
+
 
 if __name__ == '__main__':
 	main()
