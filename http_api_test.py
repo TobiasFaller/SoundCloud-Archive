@@ -16,7 +16,7 @@ payload = {'9fbbd1e3baad458473e7cf3f9334f43c'} #client_id
 url = 'http://api.soundcloud.com/users/58608651/playlists.json?client_id=9fbbd1e3baad458473e7cf3f9334f43c'
 headers = {'Content-Type': 'application/json'}
 
-filters = [dict(name='name', op='like', val='%y%')]
+filters = [dict(name='title', op='like', val='%y%')]
 params = dict(q=json.dumps(dict(filters=filters)))
 
 r = requests.get(url, params=params, headers=headers)
@@ -37,4 +37,6 @@ print 'export completed'
 
 
 #use this command to identify user {id} -- user id for 'oztrance' : 58608651
-#curl -v 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/oztrance&client_id=9fbbd1e3baad458473e7cf3f9334f43c'
+#curl -v 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/oztrance&client_id=9fbbd1e3baad458473e7cf3f9334f43c
+
+//*[@id="content"]/div/div/div[2]/div/div[2]/div[2]/ul/li[1]/div/div[1]/div[1]/div[2]/div[2]/a/span
