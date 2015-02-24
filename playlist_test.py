@@ -1,6 +1,7 @@
 #test file for enumerating playlists
 
 import requests, os.path, soundcloud
+import time
 
 #encapsulated function for future use
 def enumerate_plsts(client_id,base_url):
@@ -12,6 +13,7 @@ def enumerate_plsts(client_id,base_url):
 	for i in range(0,len(playlists)):
 		print('%d - %s' %(i, playlists[i].title))
 
+start_time = time.time()
 
 def count_tracks(playlist):
 	num_tracks = 0
@@ -46,3 +48,4 @@ print '| # Tracks |'
 for i in range(0,len(playlists)):
 	print('%d - %s tracks') %(i, count_tracks(playlists[i]))
 print '+------------------------------------------+'
+print ("Completed in %s seconds") % (time.time() - start_time)
