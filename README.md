@@ -14,3 +14,18 @@ SoundCloud Archive
 ####What SC_Archive actually does:
 
 * When provided with a User ID and API key, SC_Archive looks at all of a user's likes and playlists and dynamically archives everything at a set interval.  No longer, does one need to manually enter URL's into archiving scripts or manually organize media from SoundCloud.
+
+---
+
+####Dev. Goals:
+
+1.	Automated organization of archived files
+	* Ideally a system based from a main repository that displays via aliases (removes duplicate downloads) to streamline disk space required and filename mixups.
+
+2.	Ability to backup archive to rSync target or Amazon S3 account
+
+3.	Ability to stream with open source streaming platform
+		* It would be cool if this could be implemented on Amazon AWS & S3
+
+4.	Track log of changes to SoundCloud library and display playlists in order of tracks added (new -> old | old -> new) 
+		* ID3 tagging of "date modified" somehow needs to be implemented
