@@ -3,6 +3,7 @@
 import requests, os.path, soundcloud
 import time
 
+
 #encapsulated function for future use
 def enumerate_plsts(client_id,base_url):
 	#list all playlists for given user
@@ -13,14 +14,21 @@ def enumerate_plsts(client_id,base_url):
 	for i in range(0,len(playlists)):
 		print('%d - %s' %(i, playlists[i].title))
 
-start_time = time.time()
+start_time = time.time() #start execution timer
 
+#count tracks in playlist (can't identify track specific data)
 def count_tracks(playlist):
 	num_tracks = 0
 	for track in playlist.tracks:
 		num_tracks = num_tracks + 1
 	return num_tracks
 
+#Identify if 100% of tracks within playlist are currently streamable (avoid future archiving errors)
+def streamable(playlist):
+	if playlist.streamable > 0:
+		return 'Yes'
+	else:
+		return 'No'
 
 #soundcloud API info
 client_id = '9fbbd1e3baad458473e7cf3f9334f43c'
@@ -46,6 +54,6 @@ print '+------------------------------------------+'
 #enumerate tracks in playlists
 print '| # Tracks |'
 for i in range(0,len(playlists)):
-	print('%d - %s tracks') %(i, count_tracks(playlists[i]))
+	print("%d - %s tracks | Streamable: %s ") %(i, count_tracks(playlists[i]), streamable(playlists[i]))
 print '+------------------------------------------+'
-print ("Completed in %s seconds") % (time.time() - start_time)
+print ("Completed in %s seconds") % (time.time() - start_time) #stop execution timer and report time
