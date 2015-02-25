@@ -25,7 +25,7 @@ SoundCloud Archive
 2.	Ability to backup archive to rSync target or Amazon S3 account
 
 3.	Ability to stream with open source streaming platform
-		* It would be cool if this could be implemented on Amazon AWS & S3
+	* It would be cool if this could be implemented on Amazon AWS & S3
 
 4.	Track log of changes to SoundCloud library and display playlists in order of tracks added (new -> old | old -> new) 
-		* ID3 tagging of "date modified" somehow needs to be implemented
+	* ID3 tagging of "date modified" somehow needs to be implemented
