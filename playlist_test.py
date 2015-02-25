@@ -24,7 +24,7 @@ def count_tracks(playlist):
 	return num_tracks
 
 #Identify if 100% of tracks within playlist are currently streamable (avoid future archiving errors)
-def streamable(playlist):
+def stream_present(playlist):
 	if playlist.streamable > 0:
 		return 'Yes'
 	else:
@@ -54,6 +54,6 @@ print '+------------------------------------------+'
 #enumerate tracks in playlists
 print '| # Tracks |'
 for i in range(0,len(playlists)):
-	print("%d - %s tracks | Streamable: %s ") %(i, count_tracks(playlists[i]), streamable(playlists[i]))
+	print("%d - %s tracks | Streamable: %s ") %(i, count_tracks(playlists[i]), stream_present(playlists[i]))
 print '+------------------------------------------+'
 print ("Completed in %s seconds") % (time.time() - start_time) #stop execution timer and report time
