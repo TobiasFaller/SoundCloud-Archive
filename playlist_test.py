@@ -36,7 +36,8 @@ def enumerate_tracks(playlist,client_id):
 			track = client.get('/resolve', url=track_url)
     		track = client_tracks.get('/tracks/%d' % track_id)
     		return track.title	
-
+    		#containerize in separate test file
+    		
 #soundcloud API info
 client_id = '9fbbd1e3baad458473e7cf3f9334f43c'
 base_url = 'https://soundcloud.com/oztrance/'
