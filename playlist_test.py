@@ -30,13 +30,13 @@ def stream_present(playlist):
 	else:
 		return 'No'
 
-def enumerate_tracks(playlist,client_id):
+"""def enumerate_tracks(playlist,client_id):
 	client_tracks = soundcloud.Client(client_id=client_id)
 	for trak in playlist.tracks:
 			track = client.get('/resolve', url=track_url)
     		track = client_tracks.get('/tracks/%d' % track_id)
     		return track.title	
-    		#containerize in separate test file
+    		#containerize in separate test file"""
     		
 #soundcloud API info
 client_id = '9fbbd1e3baad458473e7cf3f9334f43c'
@@ -65,7 +65,7 @@ for i in range(0,len(playlists)):
 	print("%d - %s tracks | Streamable: %s ") %(i, count_tracks(playlists[i]), stream_present(playlists[i]))
 print '+------------------------------------------+'
 
-print 'Tracks in Playlist 0:'
-enumerate_tracks(playlists[0],client_id)
+#print 'Tracks in Playlist 0:'
+#enumerate_tracks(playlists[0],client_id)
 
 print ("Completed in %s seconds") % (time.time() - start_time) #stop execution timer and report time
