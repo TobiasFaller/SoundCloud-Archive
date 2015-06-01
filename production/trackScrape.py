@@ -8,6 +8,7 @@ set_url -> THIS MODULE -> enumerates tracks and writes to DB
 
 import lxml.html as lh
 import re, time
+import pymongo
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -78,7 +79,7 @@ def sele_tracks(url):
 	return finds
 
 
-def trim_track_meta(result):
+def trim_track_meta(db, result, set_id):
 	for set in range(len(result)):
 		look = str(result[set])
 		found_track = {}
@@ -86,9 +87,15 @@ def trim_track_meta(result):
 		#trackUrl = 'http://www.soundcloud.com' + result[set]['href']
 		found_track['href'] = result[set]['href']
 		print ('%d -- %s  --  %s') %((set+1), found_track['title'], found_track['href'])
+		set_track = {
+		"title": found_track['title'],
+		"href": found_track['href'],
+		"set ID": set_id #id to associate with origin set
+		}
+		db.set_tracks.insert(set_track)
 		
 
-def scrape_track_urls(href_to_scrape):
+def scrape_track_urls(db, href_to_scrape, set_id):
 	print 'starting script\n'
 	result = sele_tracks(href_to_scrape)
 
@@ -98,14 +105,14 @@ def scrape_track_urls(href_to_scrape):
 			result = sele_tracks(href_to_scrape)
 			print '>>> re-attempt complete <<<'
 			track_tries = track_tries + 1
-			trim_track_meta(result) 
+			trim_track_meta(db, result, set_id) 
 
 			if (len(result) > 0):
 				#THEN write to DB
 				print ('attempted %d times') %track_tries
 				break
 	else:
-		trim_track_meta(result)
+		trim_track_meta(db, result, set_id)
 		print ('\nfirst attempt GOOD')
 		print ('%d - tracks identified') %(len(result))
 

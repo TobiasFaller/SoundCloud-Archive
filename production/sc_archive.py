@@ -13,10 +13,11 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017')
 db = client.sc_database
 user_sets = db['user_sets'] #stores <set urls> from soundcloud API
+set_tracks = db['set_tracks'] #stores tracks found in user_sets (NOT ARCHIVED yet)
 
 
-#soundcloud API setup
-CLIENT_ID = 'b1f93bc0faa7e0a4776bcf336eab5638'
+#soundcloud API setup (will be added to __init__.py at some point)
+CLIENT_ID = 'b1f93bc0faa7e0a4776bcf336eab5638' 
 user_url = 'http://www.soundcloud.com/oztrance' #critical setting for script
 
 client = soundcloud.Client(client_id=CLIENT_ID)
@@ -29,20 +30,30 @@ def main():
 	plst = ('/users/%s/playlists') %user.id
 	all_sets = client.get(plst)
 
+	print '\n-----------------'
+	print 'storing user sets'
+	print '-----------------'
 	for set in all_sets:
-		print set.title + '  --  ' + set.permalink_url
 		user_set = {
 		"title": set.title,
 		"href": set.permalink_url
 		}
 		db.user_sets.insert(user_set)
-		print 'stored in DB'
+		print set.title + '  --  ' + set.permalink_url
 
+	print '\n---------------'
+	print 'scraping tracks'
+	print '---------------'
 
-	print '\nscraping...'
-	for entry in fake_db:
-		print ('scraping set - %s') %(str(entry[0][0]))
-		trackScrape.scrape_track_urls(entry[0][1])
+	cursor = db.user_sets.find(no_cursor_timeout=True)
+	for item in cursor:
+		titleRead= item['title']
+		hrefRead = item['href']
+		set_id = item['_id'] #for diagnostic purposes
+		print ('\nscraping set \' %s \' @ %s\nhref -- %s') %(titleRead, set_id, hrefRead)
+		trackScrape.scrape_track_urls(db, hrefRead, set_id) #associate user_set ID with each track found in set
+
+	print '/nscraping complete -- %d tracks found' %db.set_tracks.count()
 
 #just a test case
 def trackTest():
