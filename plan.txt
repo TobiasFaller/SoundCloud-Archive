@@ -1,0 +1,20 @@
+Issues:
+
+* 'publicly' - not all 'public' playlists are displayed.  So initial playlists with
+urls will need to be aggregated with the Soundcloud API (shouldn't grow larger than 50 - 200)
+
+* selenium script will only be used for scraping individual track links
+
+Specific flows:
+--------------.
+
+* track scraper *
+
+- pass in url from DB for nth set
+- if(can't assert bottom elem) -> break into whileTrue -> scroll down **px -> if(bottom present) BREAK
+
+
+
+- count length of finds for each scroll if(len(finds)) doesn't change for 10 updates -> break
+- identify bottom track (last element of 'finds') if(finds[last elem]) doesnt change -> break
+
