@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 #primary driver for SoundCloud archive application
-#where all modules come to get things done
 
 import soundcloud, requests, time
 import random, pymongo, re
@@ -13,7 +12,7 @@ import trackScrape
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017')
 db = client.sc_database
-user_sets = db['user_sets'] #stores set urls from soundcloud API
+user_sets = db['user_sets'] #stores <set urls> from soundcloud API
 
 
 #soundcloud API setup
@@ -45,6 +44,7 @@ def main():
 		print ('scraping set - %s') %(str(entry[0][0]))
 		trackScrape.scrape_track_urls(entry[0][1])
 
+#just a test case
 def trackTest():
 	test_url = 'http://www.soundcloud.com/augustrosenbaum/film-cph-dox-official-festival?in=oztrance/sets/experimental'
 

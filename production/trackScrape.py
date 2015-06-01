@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
-#this module is only used for scraping tracks INSIDE identified sets
-#flow: set_url -> THIS MODULE -> enumerates tracks and writes to DB
+'''
+this module is only used for scraping tracks INSIDE identified sets
+flow: 
+set_url -> THIS MODULE -> enumerates tracks and writes to DB
+'''
 
 import lxml.html as lh
 import re, time
@@ -12,8 +15,9 @@ from bs4 import BeautifulSoup
 
 track_tries = 1
 
-sets_url = 'http://www.soundcloud.com/oztrance/sets/'
-tracks_url = 'https://soundcloud.com/oztrance/sets/experimental/'
+#sets_url = 'http://www.soundcloud.com/oztrance/sets/'
+#tracks_url = 'https://soundcloud.com/oztrance/sets/experimental/'
+
 
 def scroll_to_end_tracks(browser):	
 	elem = browser.find_element_by_tag_name("body")
@@ -73,6 +77,7 @@ def sele_tracks(url):
 	print 'page elements extracted\n'
 	return finds
 
+
 def trim_track_meta(result):
 	for set in range(len(result)):
 		look = str(result[set])
@@ -93,9 +98,7 @@ def scrape_track_urls(href_to_scrape):
 			result = sele_tracks(href_to_scrape)
 			print '>>> re-attempt complete <<<'
 			track_tries = track_tries + 1
-			trim_track_meta(result) #db write occurs within function
-			
-
+			trim_track_meta(result) 
 
 			if (len(result) > 0):
 				#THEN write to DB
@@ -105,8 +108,8 @@ def scrape_track_urls(href_to_scrape):
 		trim_track_meta(result)
 		print ('\nfirst attempt GOOD')
 		print ('%d - tracks identified') %(len(result))
-		#write results to db
 
-
-"trackItem__trackTitle sc-link-dark sc-type-h3" #USE FOR CORRECT HREF
+'''
+"trackItem__trackTitle sc-link-dark sc-type-h3" USE FOR CORRECT HREF
 'soundTitle__title sc-link-dark '
+'''

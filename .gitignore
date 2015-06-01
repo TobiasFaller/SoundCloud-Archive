@@ -1,3 +1,3 @@
-#just use 'subl .gitignore to edit'
-
-/sc_API_test.py
+*.mp3
+dl_tank/
+dl_tank/*.mp3
