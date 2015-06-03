@@ -7,6 +7,7 @@ import random, pymongo, re
 
 #local module dependencies go here:
 import trackScrape
+import download
 
 #setup database things with mongodb
 from pymongo import MongoClient
@@ -55,6 +56,18 @@ def main():
 
 	print '/nscraping complete -- %d tracks found' %db.set_tracks.count()
 
+	print '\n---------'
+	print 'archiving'
+	print '---------'
+
+	cursor = db.set_tracks.find(no_cursor_timeout=True)
+	for item in cursor:
+		originSetID = '' + item['set ID']
+		#get_title = function(doc) {return doc.title;}
+		originSetName = db.user_sets.find({_id: [ObjectId(originSetID)]})
+		originSetName = originSetName['title']
+		print 'from - %s' %originSetName
+
 #just a test case
 def trackTest():
 	test_url = 'http://www.soundcloud.com/augustrosenbaum/film-cph-dox-official-festival?in=oztrance/sets/experimental'
@@ -66,7 +79,19 @@ def trackTest():
 
 #run the things
 if __name__ == '__main__':
-	main()
+	#main()
+	print 'starting\n'
+
+	cursor = db.set_tracks.find(no_cursor_timeout=True)
+	for item in cursor:
+		originSetID = item['set ID']
+		#originSetID = str(originSetID)
+		#get_title = function(doc) {return doc.title;}
+		#originSetName = user_sets.find_one({"_id":ObjectId("556c9f58acef4a2063463921")})
+		originCursor = db.user_set.find({'_id': '556c9f58acef4a2063463921'})
+		for item in originCursor:
+			print item['title']
+		
 	print '\n>>> processing complete <<<'
 
 
