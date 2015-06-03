@@ -11,6 +11,8 @@ import download
 
 #setup database things with mongodb
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 client = MongoClient('mongodb://localhost:27017')
 db = client.sc_database
 user_sets = db['user_sets'] #stores <set urls> from soundcloud API
@@ -56,17 +58,16 @@ def main():
 
 	print '/nscraping complete -- %d tracks found' %db.set_tracks.count()
 
-	print '\n---------'
-	print 'archiving'
-	print '---------'
+	print '\n--------------------'
+	print 'downloading & tagging'
+	print '---------------------'
 
 	cursor = db.set_tracks.find(no_cursor_timeout=True)
 	for item in cursor:
-		originSetID = '' + item['set ID']
-		#get_title = function(doc) {return doc.title;}
-		originSetName = db.user_sets.find({_id: [ObjectId(originSetID)]})
-		originSetName = originSetName['title']
-		print 'from - %s' %originSetName
+		originSetID = item['set ID']
+		originSetID_str = str(originSetID)
+		outdata = user_sets.find_one({"_id":ObjectId(originSetID)})
+		print outdata['title']
 
 #just a test case
 def trackTest():
@@ -79,19 +80,7 @@ def trackTest():
 
 #run the things
 if __name__ == '__main__':
-	#main()
-	print 'starting\n'
-
-	cursor = db.set_tracks.find(no_cursor_timeout=True)
-	for item in cursor:
-		originSetID = item['set ID']
-		#originSetID = str(originSetID)
-		#get_title = function(doc) {return doc.title;}
-		#originSetName = user_sets.find_one({"_id":ObjectId("556c9f58acef4a2063463921")})
-		originCursor = db.user_set.find({'_id': '556c9f58acef4a2063463921'})
-		for item in originCursor:
-			print item['title']
-		
-	print '\n>>> processing complete <<<'
+	main()
+	print '\n - processing complete -'
 
 
