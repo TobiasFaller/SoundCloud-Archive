@@ -65,9 +65,11 @@ def main():
 	cursor = db.set_tracks.find(no_cursor_timeout=True)
 	for item in cursor:
 		originSetID = item['set ID']
+		dl_url = 'http://www.soundcloud.com' + item['href']
 		originSetID_str = str(originSetID)
 		outdata = user_sets.find_one({"_id":ObjectId(originSetID)})
-		print outdata['title']
+		print 'downloading set - %s' % outdata['title']
+		download.archive_track(client, dl_url, '/Users/Alex/Documents/GitHub/SoundCloud-Archive/dl_tank')
 
 #just a test case
 def trackTest():

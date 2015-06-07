@@ -9,7 +9,7 @@
 
 import requests, soundcloud
 import os, sys
-import pymongo
+import pymongo, re
 
 from clint.textui import colored, puts, progress
 
@@ -27,7 +27,6 @@ class _dir:
 
       def __del__( self ):
         os.chdir( self.savedPath )
-
 
 
 def dl_stream(url, path):
@@ -79,7 +78,10 @@ def archive_track(client, url, newPath): #only requires raw url and client
 		'parse that stream url on your own time son'
 		pass
 
-	filename = get_meta(track)['title'] + '.mp3'
+	filename_raw = get_meta(track)['title'][0] 
+	filename = re.sub(r'[^\x00-\x7F]+','', filename_raw)
+	filename = re.sub('\.', '', filename_raw)
+	filename = filename + '.mp3'
 	print 'filename - %s' %filename
 	stream_data = client.get(track_stream, allow_redirects=False)
 	
@@ -99,6 +101,7 @@ def archive_track(client, url, newPath): #only requires raw url and client
 
 #test case [ Works ]
 #archive_track(client, TEST_URL2, '/Users/Alex/Documents/GitHub/SoundCloud-Archive/dl_tank')
+
 
 
 
