@@ -2,3 +2,4 @@
 dl_tank/
 dl_tank/*.mp3
 *.pyc
+production/*.pyc
