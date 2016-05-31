@@ -4,9 +4,16 @@
 
 from objectpath import *
 import requests
+import soundcloud
+
+from bottle import get, post, redirect, request
 
 # test client_id
-client_ID = 'b1f93bc0faa7e0a4776bcf336eab5638'
+CLIENT_ID = 'b1f93bc0faa7e0a4776bcf336eab5638'
+CLIENT_SECRET = '868315eb8d295487d73be9c000922f94'
+CLIENT_REDIR = 'http://www.alexcrisara.com'
+
+# test url
 _testURL_ = 'https://soundcloud.com/oztrance/sets/synthy'
 
 # take set url & return list of track
@@ -26,8 +33,20 @@ def getTracks(set_url, client_ID):
         '_setTitle' : respTree.execute("$.*['title']"),
         'tracks' : track_ids,
         'count' : len(track_ids) }
-        
+ 
+def soundcloud_client():
+    return soundcloud.Client(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        redirect_uri='http://localhost:3000/soundcloud/connected'
+    )
+
+def testAuth():
+    client = soundcloud_client()
+    return redirect(client.authorize_url())
+    print('redirect GOOD \n AUTH GOOD')       
 
 # tests
-getTracks(_testURL_, client_ID)
+#getTracks(_testURL_, client_ID)
+testAuth()
 print('tests finished')
