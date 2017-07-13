@@ -3,7 +3,7 @@ SoundCloud Archive
 
 ---
 
-####General Idea:
+#### General Idea:
 
 * I use SoundCloud every day (almost more than Spotify and iTunes combined) to listen to really cool independently produced sounds and music from all over the world.  SoundCloud is an amazing service, however, since it's all hosted online and has little to zero physical footprint it has some drawbacks.  First off, only "certain" tracks can actually be downloaded, this also has to be done with a physical button in the UI (which for hundreds of tracks takes forever) which also doesn't include ID3 tagging or even the highest bit-rate.  
 
@@ -11,13 +11,13 @@ SoundCloud Archive
 
 ---
 
-####What SC_Archive actually does:
+#### What SC_Archive actually does:
 
 * When provided with a User ID and API key, SC_Archive looks at all of a user's likes and playlists and dynamically archives everything at a set interval.  No longer, does one need to manually enter URL's into archiving scripts or manually organize media from SoundCloud.
 
 ---
 
-####Dev. Goals:
+#### Dev Goals:
 
 1.	Automated organization of archived files
 	* Ideally a system based from a main repository that displays via aliases (removes duplicate downloads) to streamline disk space required and filename mixups.
