@@ -4,14 +4,10 @@
 #ID3 tagging will be added later (probably as it's own functional module)
 
 import requests, soundcloud
+import argparse
+
 from clint.textui import colored, puts, progress
 
-CLIENT_ID = 'b1f93bc0faa7e0a4776bcf336eab5638' #needs to be a string
-client = soundcloud.Client(client_id=CLIENT_ID) #sc client is global
-
-TEST_URL = 'http://www.soundcloud.com/monotropa/fade-into-you-mazzy-star-cover'
-TEST_URL1 = 'http://www.soundcloud.com/miumo/people'
-TEST_URL2 = 'http://www.soundcloud.com/mickjenkinsmusic/rain-prod-kaytranada'
 
 def dl_stream(url, path):
     r = requests.get(url, stream=True)
@@ -41,26 +37,33 @@ def get_meta(track): #only requires track
 
 	return meta
 
-def archive_track(client, url): #only requires raw url and client
+def archive_track(client, url, stream, download): #only requires raw url and client
 	track_url = url
 	track = client.get('/resolve', url=track_url) #url must be set as 'url='
-	if (track.downloadable == True):
-		puts(colored.green(u'Downloadable')) 
-	else:
-		puts(colored.red(u'Downloadable')) 
 	
 	if (track.streamable == True):
 		puts(colored.green(u'Streamable')) 
 	else:
 		puts(colored.red(u'Streamable')) 
+
+	if (track.downloadable == True):
+		puts(colored.green(u'Downloadable')) 
+	else:
+		puts(colored.red(u'Downloadable'))
+
+	if track.streamable != True and stream:
+		print 'skipping ...'
+		return
+
+	if track.downloadable != True and download:
 		print 'skipping...'
-		pass
+		return
 
 	if hasattr(track, 'stream_url'):
 		track_stream = track.stream_url
 	else:
 		'parse that stream url on your own time son'
-		pass
+		return
 
 	filename = get_meta(track)['title'] + '.mp3'
 	print 'filename - %s' %filename
@@ -72,12 +75,18 @@ def archive_track(client, url): #only requires raw url and client
 	dl_stream(raw_stream_data, filename)
 	print ('%s - archive successful\n') %filename
 
-archive_track(client, TEST_URL2)
 
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='Downloud soundcloud streams to your storage')
+	parser.add_argument('-d', action='store_true', help='archive download stream')
+	parser.add_argument('-s', action='store_true', help='archive listen stream')
+	parser.add_argument('songs', metavar='link', nargs='+', help='song link(s)')
 
+	args = parser.parse_args()
 
-
-
-
-
-
+	CLIENT_ID = 'b1f93bc0faa7e0a4776bcf336eab5638' #needs to be a string
+	client = soundcloud.Client(client_id=CLIENT_ID) #sc client is global
+	stream = args.s
+	download = args.d
+	for song in args.songs:
+		archive_track(client, song, stream, download)
